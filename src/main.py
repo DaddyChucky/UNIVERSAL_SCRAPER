@@ -11,88 +11,61 @@ __copyright__   = 'DE LAFONTAINE, Charles; 2022'
 from loadcsts import *
 from time import sleep
 from random import randint as ri
+from collections import deque
 
-def humanized_action():
-    MIN_MS      = 123
+def humanize_action():
+    MIN_MS      = 300
     MAX_MS      = 555
     MS_FACTOR   = 1000
     sleep(ri(MIN_MS, MAX_MS) / MS_FACTOR)
 
 def start():
-    DRIVER.get(POLYMTL_MASTER_PROGRAMS_PAGE)
+    page = POLYMTL_PAGE
+    DRIVER.get(page)
+    RELATED_PAGE    = page[MIN_RELATED_LINK:]
+    FIRST_DOT_POS   = RELATED_PAGE.find('.')
+    RELATED_PAGE    = RELATED_PAGE[:FIRST_DOT_POS]
+    print(RELATED_PAGE)
+    humanize_action()
+    CONTENT = {}
 
     try:
-        WAIT.until(PRESENCE((By.CLASS_NAME, POLYMTL_OPTIONS_CLASS_NAME)))
+        main_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
+        humanize_action()
 
-        PROGRAMS_IGNORE_LIST    = ['Niveaux de formation', 'résultats', '']
-        PROGRAMS                = DRIVER.find_elements(By.XPATH, '//h3')
-        FILTERED_PROGRAM_NAMES  = []
-        ALL = dict()
-        for prog in PROGRAMS:
-            add = True
-            for word in prog.text.split(' '):
-                for ignore in PROGRAMS_IGNORE_LIST:
-                    for ignored_word in ignore.split(' '):
-                        if word.lower() == ignored_word.lower():
-                            add = False
-                            break
-                    if not add:
-                        break
-                if not add:
-                    break
-            if add:
-                FILTERED_PROGRAM_NAMES.append(prog.text)
+        upcoming_links = deque()
+        for link in main_links:
+            href = link.get_attribute(LINK_ATTRIBUTE)
+            if href == page or ANTI_ANCHOR in href or RELATED_PAGE not in href: continue
+            upcoming_links.append(href)
+        
+        last_link = page
 
-        SUB_PROGRAMS = DRIVER.find_elements(By.XPATH, '//a')
+        CONTENT[last_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
+        humanize_action()
+        
+        # Breadth First Search (BFS) Algorithm
+        while len(upcoming_links) > 0:
+            print('oplk')
+            current_link = upcoming_links.popleft()
+            # if last_link == current_link or "#" in link: continue
+            # DRIVER.get(current_link)
+            # humanize_action()
 
-        #print(FILTERED_PROGRAM_NAMES)
-        FILTERED_SUB_PROGRAM_NAMES = []
-        SUB_PROGRAMS_IGNORE_LIST = ['et', 'des', 'génie', 'Femmes et génie']
-        SUB_PROGRAMS_ADDITION_LIST = ['option']
-        COUNT = [6, 1, 2, 3, 3, 1, 3, 6, 10, 6, 3, 1, 1 ,1]
-        latest_idx = 0
-        latest_program = FILTERED_PROGRAM_NAMES[latest_idx]
-        ALL[latest_program] = dict()
-        for sub_program in SUB_PROGRAMS:
-            add = False
-            for sub_program_word in sub_program.text.split(' '):
-                #print(sub_program_word)
-                for filtered_program_word in FILTERED_PROGRAM_NAMES:
-                    for program_word in filtered_program_word.split(' '):
-                        if sub_program_word.lower() == program_word.lower() and sub_program_word.lower() not in SUB_PROGRAMS_IGNORE_LIST and program_word.lower() not in SUB_PROGRAMS_IGNORE_LIST or sub_program_word.lower() in SUB_PROGRAMS_ADDITION_LIST or program_word.lower() in SUB_PROGRAMS_ADDITION_LIST:
-                            # print('word match!', sub_program_word.lower(),program_word.lower())
-                            add = True
-                            break
-                    if add:
-                        break
-                if add:
-                    break
-            if add:
-                do_add = True
-                for sub_program_ignore in SUB_PROGRAMS_IGNORE_LIST:
-                    if sub_program.text == sub_program_ignore:
-                        do_add = False
-                if do_add:
-                    FILTERED_SUB_PROGRAM_NAMES.append(sub_program.text)
-                    if sub_program.text == latest_program:
-                        continue
-                    else:
-                        if sub_program.text.lower() == FILTERED_PROGRAM_NAMES[latest_idx + 1].lower():
-                            latest_idx += 1
-                            latest_program = FILTERED_PROGRAM_NAMES[latest_idx]
-                            ALL[latest_program] = dict()
-                        else:
+            # page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
 
-                            #print(sub_program.text)
-                            ALL[latest_program][sub_program.text] = ''
-    
-        print(FILTERED_SUB_PROGRAM_NAMES)
-        print(len(FILTERED_SUB_PROGRAM_NAMES))
-        # print( ALL)
+            # for page_link in page_links:
+            #     upcoming_links.append(page_link.get_attribute(LINK_ATTRIBUTE))
 
+            # CONTENT[link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
+            # humanize_action()
+
+            # last_link = current_link
+
+            print(upcoming_links)
+        
     except Exception as e:
-        #print(e)
-        print("Fatal error.")
+        print("Fatal error:", e)
 
 if __name__ == "__main__":
     start()

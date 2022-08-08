@@ -33,9 +33,14 @@ except FileNotFoundError as e:
 try:
     DEBUG                           = CONSTANTS ["DEBUG"]
     CHROME_DRIVER_PATH              = CONSTANTS ["CHROME_DRIVER_PATH"]
-    POLYMTL_MASTER_PROGRAMS_PAGE    = CONSTANTS ["POLYMTL_MASTER_PROGRAMS_PAGE"]
+    POLYMTL_PAGE                    = CONSTANTS ["POLYMTL_PAGE"]
     INPUTS                          = CONSTANTS ["INPUTS"]
-    POLYMTL_OPTIONS_CLASS_NAME      = INPUTS    ["POLYMTL_OPTIONS_CLASS_NAME"]
+    WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH = CONSTANTS ["INPUTS"]["WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH"]
+    ALL_LINKS_XPATH                 = CONSTANTS ["INPUTS"]["ALL_LINKS_XPATH"]
+    BODY_XPATH                      = CONSTANTS ["INPUTS"]["BODY_XPATH"]
+    LINK_ATTRIBUTE                  = CONSTANTS ["INPUTS"]["LINK_ATTRIBUTE"]
+    MIN_RELATED_LINK                = CONSTANTS ["INPUTS"]["MIN_RELATED_LINK"]
+    ANTI_ANCHOR                     = CONSTANTS ["INPUTS"]["ANTI_ANCHOR"]
 
 except KeyError as e:
     print(e)
