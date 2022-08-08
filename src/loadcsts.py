@@ -17,11 +17,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.expected_conditions import presence_of_element_located  as PRESENCE
 from selenium.webdriver.support.expected_conditions import element_to_be_clickable  as CLICKABLE
+import os
 
-CONSTANTS_FILE_PATH = 'csts.JSON'
+CONSTANTS_FILE_PATH = '.\\src\\constants\\csts.JSON'
+print(os.getcwd() + CONSTANTS_FILE_PATH)
 
 try:
-    with open(CONSTANTS_FILE_PATH) as CONSTANTS_FILE:
+    with open(os.getcwd() + CONSTANTS_FILE_PATH) as CONSTANTS_FILE:
         CONSTANTS = load(CONSTANTS_FILE)
 
 except FileNotFoundError as e:
