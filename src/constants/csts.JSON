@@ -1,0 +1,11 @@
+{
+    "DEBUG":                        true,
+    "CHROME_DRIVER_PATH":           "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe",
+    "POLYMTL_MASTER_PROGRAMS_PAGE": "https://www.polymtl.ca/programmes/programs/search/%2A?f%5B4%5D=im_field_niveau_formation%3A4",
+    "INPUTS": {
+        "POLYMTL_OPTIONS_CLASS_NAME":      "option",
+        "PASSWORD_ID":              "password",
+        "LOGIN_BTN_XPATH":          "//button[text()='Sign in']",
+        "FOLLOW_BTN_CSS_SELECTOR":  ".artdeco-button.artdeco-button--2.artdeco-button--full.artdeco-button--secondary.ember-view.full-width"
+    }
+}
