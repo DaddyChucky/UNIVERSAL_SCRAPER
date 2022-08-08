@@ -15,7 +15,7 @@ from collections import deque
 
 def humanize_action():
     MIN_MS      = 300
-    MAX_MS      = 555
+    MAX_MS      = 500
     MS_FACTOR   = 1000
     sleep(ri(MIN_MS, MAX_MS) / MS_FACTOR)
 
@@ -23,9 +23,7 @@ def start():
     page = POLYMTL_PAGE
     DRIVER.get(page)
     RELATED_PAGE    = page[MIN_RELATED_LINK:]
-    FIRST_DOT_POS   = RELATED_PAGE.find('.')
-    RELATED_PAGE    = RELATED_PAGE[:FIRST_DOT_POS]
-    print(RELATED_PAGE)
+    VISITED_LINKS   = set()
     humanize_action()
     CONTENT = {}
 
@@ -43,26 +41,31 @@ def start():
 
         CONTENT[last_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
         humanize_action()
-        
+
         # Breadth First Search (BFS) Algorithm
         while len(upcoming_links) > 0:
-            print('oplk')
             current_link = upcoming_links.popleft()
-            # if last_link == current_link or "#" in link: continue
-            # DRIVER.get(current_link)
-            # humanize_action()
+            
+            if last_link == current_link or ANTI_ANCHOR in current_link or RELATED_PAGE not in current_link or current_link in VISITED_LINKS: continue
+            
+            VISITED_LINKS.add(current_link)
+            print("Currently visiting link:", current_link)
+            
+            DRIVER.get(current_link)
+            humanize_action()
 
-            # page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
+            page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
+            humanize_action()
 
-            # for page_link in page_links:
-            #     upcoming_links.append(page_link.get_attribute(LINK_ATTRIBUTE))
+            for page_link in page_links:
+                upcoming_links.append(page_link.get_attribute(LINK_ATTRIBUTE))
 
-            # CONTENT[link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
-            # humanize_action()
+            CONTENT[current_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
+            print("Saved", len(CONTENT[current_link]), "characters. Continuing.")
 
-            # last_link = current_link
+            humanize_action()
 
-            print(upcoming_links)
+            last_link = current_link
         
     except Exception as e:
         print("Fatal error:", e)
