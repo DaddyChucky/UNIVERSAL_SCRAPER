@@ -1,7 +1,7 @@
 {
     "DEBUG":                                true,
     "CHROME_DRIVER_PATH":                   "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe",
-    "POLYMTL_PAGE":                         "https://www.polymtl.ca",
+    "POLYMTL_PAGE":                         "https://www.polymtl.ca/",
     "INPUTS": {
         "WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH":  "html",
         "ALL_LINKS_XPATH":                  "//a[@href]",
