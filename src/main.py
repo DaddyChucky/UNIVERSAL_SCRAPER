@@ -48,28 +48,32 @@ def start(page: str):
             print(len(upcoming_links))
             current_link = upcoming_links.popleft()
             
-            if current_link in VISITED_LINKS or ANTI_ANCHOR in current_link or RELATED_PAGE not in current_link or last_link == current_link: continue
+            try:
+                if current_link in VISITED_LINKS or ANTI_ANCHOR in current_link or RELATED_PAGE not in current_link or last_link == current_link: continue
 
-            VISITED_LINKS.add(current_link)
-            print("Currently visiting link:", current_link)
+                VISITED_LINKS.add(current_link)
+                print("Currently visiting link:", current_link)
+                
+                DRIVER.get(current_link)
+
+                page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
+
+                for page_link in page_links:
+                    try:
+                        upcoming_links.append(page_link.get_attribute(LINK_ATTRIBUTE))
+                    except Exception:
+                        continue
+
+                CONTENT[current_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
+                print("Saved", len(CONTENT[current_link]), "characters for", current_link, "Continuing...")
+
+                last_link = current_link
+
+                with open(os.getcwd() + r"\out\data.json", "w+", encoding="utf-8") as f:
+                    json.dump(CONTENT, f, ensure_ascii=True, check_circular=True, allow_nan=True, indent=4)
             
-            DRIVER.get(current_link)
-
-            page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
-
-            for page_link in page_links:
-                try:
-                    upcoming_links.append(page_link.get_attribute(LINK_ATTRIBUTE))
-                except Exception:
-                    continue
-
-            CONTENT[current_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
-            print("Saved", len(CONTENT[current_link]), "characters for", current_link, "Continuing...")
-
-            last_link = current_link
-
-            with open(os.getcwd() + r"\out\data.json", "w+", encoding="utf-8") as f:
-                json.dump(CONTENT, f, ensure_ascii=True, check_circular=True, allow_nan=True, indent=4)
+            except Exception:
+                continue
         
     except Exception as e:
         print("Fatal error:", e)
