@@ -45,7 +45,7 @@ def start(page: str):
 
         # Breadth First Search (BFS) Algorithm
         while len(upcoming_links) > 0:
-            print(len(upcoming_links))
+            print("Number of upcoming links:", len(upcoming_links))
             current_link = upcoming_links.popleft()
             
             try:
