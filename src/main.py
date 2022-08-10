@@ -1,24 +1,23 @@
 __title__       = 'main.py'
-__doc__         = 'Scraps university courses.'
-__author__      = 'DE LAFONTAINE, Charles'
-__copyright__   = 'DE LAFONTAINE, Charles; 2022'
+__doc__         = 'Generic scraper for any website.'
+__author__      = 'DE LAFONTAINE, Charles.'
+__copyright__   = 'See MIT license description on the GitHub repo.'
 
 
 ###
 #   --> RUN FILE <--
 ###
 
-from loadcsts import *
-from time import sleep
-from random import randint as ri
+from utils import *
+from constants_loader import *
+from taste_the_rainbow import *
 from collections import deque
 import json
 
-def humanize_action():
-    MIN_MS      = 300
-    MAX_MS      = 500
-    MS_FACTOR   = 1000
-    sleep(ri(MIN_MS, MAX_MS) / MS_FACTOR)
+def start(pages: list[str]):
+    #TODO Add multiprocessing/threading here!
+    for page in pages:
+        start(page)
 
 def start(page: str):
     DRIVER.get(page)
@@ -27,10 +26,12 @@ def start(page: str):
     VISITED_LINKS.add(page)
     humanize_action()
     CONTENT = {}
+    N_WEBSITES_VISITED = 1
 
     try:
         main_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
-        humanize_action()
+        if DO_HUMANIZE:
+            humanize_action()
 
         upcoming_links = deque()
         for link in main_links:
@@ -41,22 +42,36 @@ def start(page: str):
         last_link = page
 
         CONTENT[last_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
-        humanize_action()
+        if DO_HUMANIZE:
+            humanize_action()
 
-        # Breadth First Search (BFS) Algorithm
+        # Breadth-First Search (BFS) Algorithm
+        if DO_PRINT:
+            print_header(MAIN_CATEGORY, "Starting BFS algorithm")
+
         while len(upcoming_links) > 0:
-            print("Number of upcoming links:", len(upcoming_links))
+            if DO_PRINT:
+                print_header(MAIN_CATEGORY, "Visited " + str(N_WEBSITES_VISITED) + " website(s) and counting...")
+                print_warning(MAIN_CATEGORY, "Number of upcoming links: " + str(len(upcoming_links)))
+
             current_link = upcoming_links.popleft()
-            
             try:
                 if current_link in VISITED_LINKS or ANTI_ANCHOR in current_link or RELATED_PAGE not in current_link or last_link == current_link: continue
 
                 VISITED_LINKS.add(current_link)
-                print("Currently visiting link:", current_link)
+
+                if DO_PRINT:
+                    print_header(MAIN_CATEGORY, "Currently visiting link: " + current_link)
                 
                 DRIVER.get(current_link)
+                if DO_HUMANIZE:
+                    humanize_action()
+
+                N_WEBSITES_VISITED += 1
 
                 page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
+                if DO_HUMANIZE:
+                    humanize_action()
 
                 for page_link in page_links:
                     try:
@@ -65,18 +80,24 @@ def start(page: str):
                         continue
 
                 CONTENT[current_link] = DRIVER.find_element(By.XPATH, BODY_XPATH).text
-                print("Saved", len(CONTENT[current_link]), "characters for", current_link, "Continuing...")
+                if DO_HUMANIZE:
+                    humanize_action()
+
+                if DO_PRINT:
+                    print_success(MAIN_CATEGORY, "Saved " + str(len(CONTENT[current_link])) + " characters for " + current_link)
 
                 last_link = current_link
 
-                with open(os.getcwd() + r"\out\data.json", "w+", encoding="utf-8") as f:
-                    json.dump(CONTENT, f, ensure_ascii=True, check_circular=True, allow_nan=True, indent=4)
+                with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
+                    json.dump(CONTENT, f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
             
             except Exception:
                 continue
         
     except Exception as e:
-        print("Fatal error:", e)
+        print_failure(MAIN_CATEGORY, "Fatal error")
+        print_failure(MAIN_CATEGORY, e)
+        exit()
 
 if __name__ == "__main__":
-    start(POLYMTL_PAGE)
+    start(POLYMTL)

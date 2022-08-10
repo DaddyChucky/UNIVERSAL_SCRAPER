@@ -1,7 +1,20 @@
 {
-    "DEBUG":                                true,
-    "CHROME_DRIVER_PATH":                   "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe",
-    "POLYMTL_PAGE":                         "https://www.polymtl.ca/",
+    "CONTROLS": {
+        "DEBUG":                    true,
+        "DO_PRINT":                 true,
+        "DO_HUMANIZE":              false,
+        "CHROME_DRIVER_PATH":       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe",
+        "DATA_OUT_SAVE_FILE_NAME":  "DATA",
+        "MAIN_CATEGORY":            "MAIN",
+        "DATA_OUT_FORMAT":          ".json",
+        "DATA_OUT_OPEN_MODE":       "w+",
+        "DATA_ENCODING":            "utf-8",
+        "DATA_OUT_PRE_FOLDER":      "\\out\\",
+        "DUMP_ENSURE_ASCII":        true,
+        "DUMP_CHECK_CIRCULAR":      true,
+        "DUMP_ALLOW_NAN":           true,
+        "DUMP_INDENT":              4
+    },
     "INPUTS": {
         "WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH":  "html",
         "ALL_LINKS_XPATH":                  "//a[@href]",
@@ -9,5 +22,10 @@
         "LINK_ATTRIBUTE":                   "href",
         "MIN_RELATED_LINK":                 12,
         "ANTI_ANCHOR":                      "#"
+    },
+    "PAGES": {
+        "POLYMTL":  "https://www.polymtl.ca/",
+        "ETS":      "https://www.etsmtl.ca/",
+        "HEC":      "https://www.hec.ca/"
     }
 }
