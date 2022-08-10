@@ -1,6 +1,9 @@
 {
     "CONTROLS": {
         "DEBUG":                    true,
+        "SAVE_DATA":                true,
+        "SAVE_DATA_ON_N":           true,
+        "SAVE_DATA_FACTOR":         101,
         "DO_PRINT":                 true,
         "DO_HUMANIZE":              false,
         "CHROME_DRIVER_PATH":       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe",

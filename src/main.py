@@ -14,19 +14,25 @@ from taste_the_rainbow import *
 from collections import deque
 import json
 
-def start(pages: list[str]):
+
+def do_save(content: dict) -> None:
+    with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
+        json.dump(content, f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
+
+def start(pages: list[str]) -> None:
     #TODO Add multiprocessing/threading here!
     for page in pages:
         start(page)
 
-def start(page: str):
+def start(page: str) -> None:
     DRIVER.get(page)
-    RELATED_PAGE    = page[MIN_RELATED_LINK:]
-    VISITED_LINKS   = set()
+    RELATED_PAGE        = page[MIN_RELATED_LINK:]
+    VISITED_LINKS       = set()
+    N_WEBSITES_VISITED  = 1
+    TRUE_COUNT          = N_WEBSITES_VISITED
     VISITED_LINKS.add(page)
     humanize_action()
     CONTENT = {}
-    N_WEBSITES_VISITED = 1
 
     try:
         main_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
@@ -67,7 +73,8 @@ def start(page: str):
                 if DO_HUMANIZE:
                     humanize_action()
 
-                N_WEBSITES_VISITED += 1
+                N_WEBSITES_VISITED  += 1
+                TRUE_COUNT          += 1
 
                 page_links = DRIVER.find_elements(By.XPATH, ALL_LINKS_XPATH)
                 if DO_HUMANIZE:
@@ -88,8 +95,12 @@ def start(page: str):
 
                 last_link = current_link
 
-                with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
-                    json.dump(CONTENT, f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
+                if SAVE_DATA:
+                    if SAVE_DATA_ON_N and TRUE_COUNT % SAVE_DATA_FACTOR == 0:
+                        TRUE_COUNT = 0
+                        do_save(CONTENT)
+                    else:
+                        do_save(CONTENT)
             
             except Exception:
                 continue

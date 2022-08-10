@@ -37,6 +37,9 @@ try:
     # Controls
     CONTROLS                        = CONSTANTS["CONTROLS"]
     DEBUG                           = CONTROLS["DEBUG"]
+    SAVE_DATA                       = CONTROLS["SAVE_DATA"]
+    SAVE_DATA_ON_N                  = CONTROLS["SAVE_DATA_ON_N"]
+    SAVE_DATA_FACTOR                = CONTROLS["SAVE_DATA_FACTOR"]
     DO_PRINT                        = CONTROLS["DO_PRINT"]
     DO_HUMANIZE                     = CONTROLS["DO_HUMANIZE"]
     CHROME_DRIVER_PATH              = CONTROLS["CHROME_DRIVER_PATH"]
