@@ -15,13 +15,14 @@ from collections import deque
 import json
 
 
-def do_save(content: dict) -> None:
+def do_save(content: dict, i: int) -> None:
     if SAVE_DATA: # Double check
         if not os.path.exists(os.getcwd() + DATA_OUT_PRE_FOLDER):
             os.makedirs(os.getcwd() + DATA_OUT_PRE_FOLDER)
 
-        with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
+        with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + str(i) + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
             json.dump(content, f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
+            humanize_action()
 
 def start(pages: list[str]) -> None:
     #TODO Add multiprocessing/threading here!
@@ -73,9 +74,10 @@ def bfs(upcoming_links: deque, visited_links: set[str], related_page: str, conte
             last_link = current_link
 
             if SAVE_DATA:
-                if SAVE_DATA_ON_N and TRUE_COUNT % SAVE_DATA_FACTOR != 0: continue
+                if SAVE_DATA_ON_N and TRUE_COUNT % SAVE_DATA_FACTOR != 0 and len(upcoming_links) > 0: continue
                 TRUE_COUNT = 0
-                do_save(content)
+                do_save(content, N_WEBSITES_VISITED)
+                content = {}
         
         except Exception:
             continue
