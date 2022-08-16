@@ -7,7 +7,7 @@
 - You can let the script run, and all the data retrieved can be collected in the OUT/data.json as a JSON dictionary (key as the URI).
 
 ## [FR] Description:
-- Robot d'exploration pour le site Web d'une université donnée.
+- Robot d'exploration d'un site Web quelconque.
 - Avec qu'un seul lien de départ, le programme reconsruira une hiérarchie de liens et parcourra chacun d'eux tout en produisant les données des pages de manière itérative.
 - L'algorithme de parcours en largeur (BFS) est actuellement implémenté. Je prévois ajouter l'algorithme de parcours en profondeur (DFS) peu de temps après que BFS aura terminé sa preuve de concept.
 - Vous pouvez laisser le script s'exécuter et toutes les données récupérées peuvent être collectées dans le OUT/data.jsons sous forme de dictionnaire JSON (dont la clé est l'URI).
