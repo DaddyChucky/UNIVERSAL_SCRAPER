@@ -20,7 +20,7 @@ def do_save(content: dict, i: int) -> None:
         if not os.path.exists(os.getcwd() + DATA_OUT_PRE_FOLDER):
             os.makedirs(os.getcwd() + DATA_OUT_PRE_FOLDER)
 
-        with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + str(i) + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
+        with open(os.getcwd() + DATA_OUT_PRE_FOLDER + DATA_OUT_SAVE_FILE_NAME + ITERATOR_SEPARATOR + str(i) + DATA_OUT_FORMAT, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
             json.dump(content, f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
             humanize_action()
 
@@ -38,7 +38,7 @@ def bfs(upcoming_links: deque, visited_links: set[str], related_page: str, conte
             print_warning(MAIN_CATEGORY, "Number of upcoming links: " + str(len(upcoming_links)))
 
         current_link = upcoming_links.popleft()
-        print(related_page not in current_link or last_link == current_link)
+
         try:
             if current_link in visited_links or ANTI_ANCHOR in current_link or related_page not in current_link or last_link == current_link: continue
 
@@ -116,4 +116,4 @@ def start(page: str) -> None:
         exit()
 
 if __name__ == "__main__":
-    start(POLYMTL)
+    start(HEC)

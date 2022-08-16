@@ -62,6 +62,7 @@ try:
     LINK_ATTRIBUTE                  = INPUTS["LINK_ATTRIBUTE"]
     MIN_RELATED_LINK                = INPUTS["MIN_RELATED_LINK"]
     ANTI_ANCHOR                     = INPUTS["ANTI_ANCHOR"]
+    ITERATOR_SEPARATOR              = INPUTS["ITERATOR_SEPARATOR"]
 
     # Pages
     PAGES                           = CONSTANTS["PAGES"]

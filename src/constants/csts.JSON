@@ -3,7 +3,7 @@
         "DEBUG":                    true,
         "SAVE_DATA":                true,
         "SAVE_DATA_ON_N":           true,
-        "SAVE_DATA_FACTOR":         49,
+        "SAVE_DATA_FACTOR":         51,
         "DO_PRINT":                 true,
         "DO_HUMANIZE":              false,
         "CHROME_DRIVER_PATH":       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe",
@@ -24,7 +24,8 @@
         "BODY_XPATH":                       "//body",
         "LINK_ATTRIBUTE":                   "href",
         "MIN_RELATED_LINK":                 12,
-        "ANTI_ANCHOR":                      "#"
+        "ANTI_ANCHOR":                      "#",
+        "ITERATOR_SEPARATOR":               "_"
     },
     "PAGES": {
         "POLYMTL":  "https://www.polymtl.ca/",
