@@ -73,8 +73,11 @@ def bfs(upcoming_links: deque, visited_links: set[str], related_page: str, conte
 
             last_link = current_link
 
+            if len(upcoming_links) == 0:
+                do_save(content, N_WEBSITES_VISITED)
+
             if SAVE_DATA:
-                if SAVE_DATA_ON_N and TRUE_COUNT % SAVE_DATA_FACTOR != 0 and len(upcoming_links) > 0: continue
+                if SAVE_DATA_ON_N and TRUE_COUNT % SAVE_DATA_FACTOR != 0: continue
                 TRUE_COUNT = 0
                 do_save(content, N_WEBSITES_VISITED)
                 content = {}
