@@ -73,7 +73,7 @@ def bfs(upcoming_links: deque, visited_links: set[str], related_page: str, conte
 
             last_link = current_link
 
-            if len(upcoming_links) == 0:
+            if len(upcoming_links) == 1:
                 do_save(content, N_WEBSITES_VISITED)
 
             if SAVE_DATA:
@@ -119,4 +119,4 @@ def start(page: str) -> None:
         exit()
 
 if __name__ == "__main__":
-    start(HEC)
+    start(POLYMTL)
