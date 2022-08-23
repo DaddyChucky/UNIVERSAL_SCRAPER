@@ -28,8 +28,9 @@
         "ITERATOR_SEPARATOR":               "_"
     },
     "PAGES": {
-        "POLYMTL":  "https://www.polymtl.ca/",
-        "ETS":      "https://www.etsmtl.ca/",
-        "HEC":      "https://www.hec.ca/"
+        "POLYMTL":      "https://www.polymtl.ca/",
+        "ETS":          "https://www.etsmtl.ca/",
+        "HEC":          "https://www.hec.ca/",
+        "SHERBROOKE":   "https://www.usherbrooke.ca/"
     }
 }

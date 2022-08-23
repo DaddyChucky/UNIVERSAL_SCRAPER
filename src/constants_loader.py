@@ -69,6 +69,7 @@ try:
     POLYMTL                         = PAGES["POLYMTL"]
     ETS                             = PAGES["ETS"]
     HEC                             = PAGES["HEC"]
+    SHERBROOKE                      = PAGES["SHERBROOKE"]
 
 except KeyError as e:
     print_failure(CATEGORY, "Errors getting constants/invalid key")
