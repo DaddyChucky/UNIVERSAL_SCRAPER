@@ -49,6 +49,7 @@ try:
     DATA_OUT_OPEN_MODE              = CONTROLS["DATA_OUT_OPEN_MODE"]
     DATA_ENCODING                   = CONTROLS["DATA_ENCODING"]
     DATA_OUT_PRE_FOLDER             = CONTROLS["DATA_OUT_PRE_FOLDER"]
+    DATA_OUT_POST_FOLDER            = CONTROLS["DATA_OUT_POST_FOLDER"]
     DUMP_ENSURE_ASCII               = CONTROLS["DUMP_ENSURE_ASCII"]
     DUMP_CHECK_CIRCULAR             = CONTROLS["DUMP_CHECK_CIRCULAR"]
     DUMP_ALLOW_NAN                  = CONTROLS["DUMP_ALLOW_NAN"]
@@ -70,6 +71,7 @@ try:
     ETS                             = PAGES["ETS"]
     HEC                             = PAGES["HEC"]
     SHERBROOKE                      = PAGES["SHERBROOKE"]
+    YOUR_WEBSITE_HERE               = PAGES["YOUR_WEBSITE_HERE"]
 
 except KeyError as e:
     print_failure(CATEGORY, "Errors getting constants/invalid key")
@@ -87,8 +89,3 @@ if not DEBUG:
     OPTIONS.add_argument("disable-popup-blocking")
     OPTIONS.add_experimental_option("excludeSwitches", ["enable-logging"])
     OPTIONS.add_experimental_option("excludeSwitches", ['enable-automation'])
-
-SERVICE             = Service(CHROME_DRIVER_PATH)
-DRIVER              = webdriver.Chrome(service=SERVICE, options=OPTIONS)
-SECS_MAX_TIMEOUT    = 10
-WAIT                = WebDriverWait(DRIVER, SECS_MAX_TIMEOUT)

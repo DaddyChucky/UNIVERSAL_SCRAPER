@@ -13,6 +13,7 @@
         "DATA_OUT_OPEN_MODE":       "w+",
         "DATA_ENCODING":            "utf-8",
         "DATA_OUT_PRE_FOLDER":      "\\out\\",
+        "DATA_OUT_POST_FOLDER":     "\\purged\\",
         "DUMP_ENSURE_ASCII":        true,
         "DUMP_CHECK_CIRCULAR":      true,
         "DUMP_ALLOW_NAN":           true,
@@ -28,9 +29,10 @@
         "ITERATOR_SEPARATOR":               "_"
     },
     "PAGES": {
-        "POLYMTL":      "https://www.polymtl.ca/",
-        "ETS":          "https://www.etsmtl.ca/",
-        "HEC":          "https://www.hec.ca/",
-        "SHERBROOKE":   "https://www.usherbrooke.ca/"
+        "POLYMTL":              "https://www.polymtl.ca/",
+        "ETS":                  "https://www.etsmtl.ca/",
+        "HEC":                  "https://www.hec.ca/",
+        "SHERBROOKE":           "https://www.usherbrooke.ca/",
+        "YOUR_WEBSITE_HERE":    ""
     }
 }

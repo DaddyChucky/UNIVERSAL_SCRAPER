@@ -15,6 +15,12 @@ from collections import deque
 import json
 
 
+SERVICE             = Service(CHROME_DRIVER_PATH)
+DRIVER              = webdriver.Chrome(service=SERVICE, options=OPTIONS)
+SECS_MAX_TIMEOUT    = 10
+WAIT                = WebDriverWait(DRIVER, SECS_MAX_TIMEOUT)
+
+
 def do_save(content: dict, i: int) -> None:
     if SAVE_DATA: # Double check
         if not os.path.exists(os.getcwd() + DATA_OUT_PRE_FOLDER): os.makedirs(os.getcwd() + DATA_OUT_PRE_FOLDER)
