@@ -5,18 +5,30 @@ __copyright__   = 'See MIT license description on the GitHub repo.'
 
 
 ###
-#   --> CLEAN DATA CONTAINED IN OUT FOLDER <--
+#   --> PURGATORY <--
 ###
+
 
 from utils import *
 from constants_loader import *
 from taste_the_rainbow import *
 import  json
 
-CATEGORY        = "PURGATORY"
-ITERATED_FILE   = 1
+
+CATEGORY:       str     = "PURGATORY"
+ITERATED_FILE:  int     = 1
+
 
 def get_out_files_name() -> list:
+    """
+    Gets the name of the files in the output folder
+
+    Args:
+        None
+            
+    Returns:
+        (list) Name of the files in the output folder
+    """
     try:
         return os.listdir(os.getcwd() + DATA_OUT_PRE_FOLDER)
 
@@ -45,12 +57,12 @@ def get_current_iterated_file_content() -> dict:
 
 
 def run_purgatory():
-    current_iterated_file_content   = get_current_iterated_file_content()
-    current_website_visited: str    = sorted(current_iterated_file_content.keys())[ITERATED_FILE - 1]
-    current_content_visited: list   = current_iterated_file_content[current_website_visited].split('. ')
+    current_iterated_file_content:  dict   = get_current_iterated_file_content()
+    current_website_visited:        str    = sorted(current_iterated_file_content.keys())[ITERATED_FILE - 1]
+    current_content_visited:        list   = current_iterated_file_content[current_website_visited].split('. ')
     try:
         for out_file_name in get_out_files_name():
-            data = dict()
+            data: dict = dict()
             with open(os.getcwd() + DATA_OUT_PRE_FOLDER + out_file_name) as f:
                 data = json.load(f)
                 for key in data.keys():
