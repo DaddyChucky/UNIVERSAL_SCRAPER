@@ -58,7 +58,14 @@ try:
     DUMP_INDENT:                        int     = CONTROLS  ["DUMP_INDENT"]
     SECS_MAX_TIMEOUT:                   int     = CONTROLS  ["SECS_MAX_TIMEOUT"]
     LATEST_SAVE_CHECK:                  int     = CONTROLS  ["LATEST_SAVE_CHECK"]
-
+    FILE_NAME_CUTOFF:                   int     = CONTROLS  ["FILE_NAME_CUTOFF"]
+    CLEAN_INVALID_DATA:                 str     = CONTROLS  ["CLEAN_INVALID_DATA"]
+    CLEAN_MIN_SENTENCE_LENGTH:          int     = CONTROLS  ["CLEAN_MIN_SENTENCE_LENGTH"]
+    CLEAN_SENTENCE_CHAR_VERIFIER:       str     = CONTROLS  ["CLEAN_SENTENCE_CHAR_VERIFIER"]
+    PURGE_CUTOFF:                       int = 51
+    PURGE_PERCENT_FACTOR_PURGE:         int = 100
+    PURGE_ROUND_PRECISION_PURGE_STATUS: int = 2
+    
     INPUTS:                             dict    = CONSTANTS ["INPUTS"]
     WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH:    str     = INPUTS    ["WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH"]
     ALL_LINKS_XPATH:                    str     = INPUTS    ["ALL_LINKS_XPATH"]
