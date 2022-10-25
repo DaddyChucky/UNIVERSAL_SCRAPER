@@ -14,7 +14,9 @@ from constants_loader import *
 from taste_the_rainbow import *
 import  json
 
+
 CATEGORY = "PURGATORY"
+
 
 def get_out_files_name() -> list:
     """
@@ -31,11 +33,11 @@ def get_out_files_name() -> list:
     """
     try:
         return os.listdir(os.getcwd() + DATA_OUT_PRE_FOLDER)
-
     except Exception as e:
         print_failure(CATEGORY, "Can't list out files name @ " + os.getcwd() + DATA_OUT_PRE_FOLDER)
         print_failure(CATEGORY, e)
         exit()
+
 
 def get_out_file_number(out_file_name: str) -> int:
     """
@@ -57,6 +59,7 @@ def get_out_file_number(out_file_name: str) -> int:
         print_failure(CATEGORY, "Fatal error during get_out_file_number")
         print_failure(CATEGORY, e)
         exit()
+
 
 def get_current_iterated_file_content(iterated_file: int) -> dict:
     """
@@ -86,6 +89,7 @@ def get_current_iterated_file_content(iterated_file: int) -> dict:
         print(e)
         exit()
 
+
 def do_clean(dict_to_be_cleaned: dict) -> dict:
     """
     Strips, and cleans non-sentences for all entries of the given dict
@@ -113,6 +117,7 @@ def do_clean(dict_to_be_cleaned: dict) -> dict:
         print_failure(CATEGORY, "Fatal error during do_clean")
         print(e)
         exit()
+
 
 def purgatory(iterated_file: int, cutoff: int) -> dict:
     """
@@ -160,6 +165,7 @@ def purgatory(iterated_file: int, cutoff: int) -> dict:
         print(e)
         exit()
 
+
 def do_purge() -> None:
     """
     Runs purgatory for every file present in the OUT folder
@@ -184,6 +190,7 @@ def do_purge() -> None:
         print_failure(CATEGORY, "Fatal error during do_purge")
         print(e)
         exit()
+
 
 if __name__ == '__main__':
     do_purge()
