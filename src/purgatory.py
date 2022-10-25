@@ -109,6 +109,8 @@ def do_clean(dict_to_be_cleaned: dict) -> dict:
             new_content: list = []
             for content in dict_to_be_cleaned[key]:
                 content = content.strip()
+                for kill_word in KILL_WORDS:
+                    if content.find(kill_word.lower()) != FIND_NOT_FOUND: continue
                 if content == CLEAN_INVALID_DATA or len(content.split(CLEAN_SENTENCE_CHAR_VERIFIER)) < CLEAN_MIN_SENTENCE_LENGTH: continue
                 new_content.append(content)
             if new_content: new_dict[key] = new_content

@@ -22,11 +22,13 @@
         "LATEST_SAVE_CHECK":                    1,
         "FILE_NAME_CUTOFF":                     5,
         "CLEAN_INVALID_DATA":                   "",
-        "CLEAN_MIN_SENTENCE_LENGTH":            15,
+        "CLEAN_MIN_SENTENCE_LENGTH":            16,
         "CLEAN_SENTENCE_CHAR_VERIFIER":         " ",
         "PURGE_CUTOFF":                         51,
         "PURGE_PERCENT_FACTOR_PURGE":           100,
-        "PURGE_ROUND_PRECISION_PURGE_STATUS":   2
+        "PURGE_ROUND_PRECISION_PURGE_STATUS":   2,
+        "FIND_NOT_FOUND":                       -1,
+        "KILL_WORDS":                           ["COVID", "COVID-19"]
     },
     "INPUTS": {
         "WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH":  "html",
