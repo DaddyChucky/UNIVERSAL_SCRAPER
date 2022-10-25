@@ -3,7 +3,16 @@ __doc__         = 'Makes text decoration.'
 __author__      = 'DE LAFONTAINE, Charles.'
 __copyright__   = 'See MIT license description on the GitHub repo.'
 
+
+###
+#   --> TASTE_THE_RAINBOW <--
+###
+
+
 class TextDecoration:
+    """
+    Interface for text decoration used to output text
+    """
     HEADER      = '\033[95m'
     OKBLUE      = '\033[94m'
     OKCYAN      = '\033[96m'
@@ -14,25 +23,66 @@ class TextDecoration:
     BOLD        = '\033[1m'
     UNDERLINE   = '\033[4m'
 
+
 def print_header(category: str, text_to_print: str) -> None:
+    """
+    Prints text as header
+
+    Args:
+        category        (str): Message category
+        text_to_print   (str): Text to print (output)
+            
+    Returns:
+        None
+    """
     print(
         TextDecoration.HEADER + TextDecoration.BOLD + "[" + category + "] > " + TextDecoration.ENDC + TextDecoration.OKBLUE +
         text_to_print + TextDecoration.ENDC)
 
 
 def print_success(category: str, text_to_print: str) -> None:
+    """
+    Prints text as success
+
+    Args:
+        category        (str): Message category
+        text_to_print   (str): Text to print (output)
+            
+    Returns:
+        None
+    """
     print(
         TextDecoration.HEADER + TextDecoration.BOLD + "[" + category + "] > " + TextDecoration.ENDC + TextDecoration.OKGREEN +
         text_to_print + " ✓ " + TextDecoration.ENDC)
 
 
 def print_warning(category: str, text_to_print: str) -> None:
+    """
+    Prints text as warning
+
+    Args:
+        category        (str): Message category
+        text_to_print   (str): Text to print (output)
+            
+    Returns:
+        None
+    """
     print(
         TextDecoration.HEADER + TextDecoration.BOLD + "[" + category + "] > " + TextDecoration.ENDC + TextDecoration.WARNING +
         text_to_print + " ⚠ " + TextDecoration.ENDC)
 
 
 def print_failure(category: str, text_to_print: str) -> None:
+    """
+    Prints text as failure
+
+    Args:
+        category        (str): Message category
+        text_to_print   (str): Text to print (output)
+            
+    Returns:
+        None
+    """
     print(
         TextDecoration.HEADER + TextDecoration.BOLD + "[" + category + "] > " + TextDecoration.ENDC + TextDecoration.FAIL +
         text_to_print + " ✗ " + TextDecoration.ENDC)

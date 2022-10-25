@@ -5,8 +5,9 @@ __copyright__   = 'See MIT license description on the GitHub repo.'
 
 
 ###
-#   --> CLEAN DATA CONTAINED IN OUT FOLDER <--
+#   --> PURGATORY <--
 ###
+
 
 from utils import *
 from constants_loader import *
@@ -16,6 +17,15 @@ import  json
 CATEGORY        = "PURGATORY"
 
 def get_out_files_name() -> list:
+    """
+    Gets the name of the files in the output folder
+
+    Args:
+        None
+            
+    Returns:
+        (list) Name of the files in the output folder
+    """
     try:
         return os.listdir(os.getcwd() + DATA_OUT_PRE_FOLDER)
 

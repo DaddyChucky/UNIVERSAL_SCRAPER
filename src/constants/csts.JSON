@@ -17,7 +17,9 @@
         "DUMP_ENSURE_ASCII":        true,
         "DUMP_CHECK_CIRCULAR":      true,
         "DUMP_ALLOW_NAN":           true,
-        "DUMP_INDENT":              4
+        "DUMP_INDENT":              4,
+        "SECS_MAX_TIMEOUT":         10,
+        "LATEST_SAVE_CHECK":        1
     },
     "INPUTS": {
         "WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH":  "html",
