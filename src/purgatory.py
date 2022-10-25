@@ -195,4 +195,5 @@ def do_purge() -> None:
 
 
 if __name__ == '__main__':
+    create_folders(pre=True, post=True, out_pre_folder=DATA_OUT_PRE_FOLDER, out_post_folder=DATA_OUT_POST_FOLDER)
     do_purge()

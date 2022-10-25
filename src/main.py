@@ -144,4 +144,5 @@ def start(page: str) -> None:
         exit()
 
 if __name__ == "__main__":
+    create_folders(pre=True, out_pre_folder=DATA_OUT_PRE_FOLDER)
     start(YOUR_WEBSITE_HERE)
