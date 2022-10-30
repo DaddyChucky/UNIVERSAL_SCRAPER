@@ -67,6 +67,7 @@ try:
     PURGE_ROUND_PRECISION_PURGE_STATUS: int         = CONTROLS  ["PURGE_ROUND_PRECISION_PURGE_STATUS"]
     FIND_NOT_FOUND:                     int         = CONTROLS  ["FIND_NOT_FOUND"]
     KILL_WORDS:                         list[str]   = CONTROLS  ["KILL_WORDS"]
+    N_THREADS:                          int         = CONTROLS  ["N_THREADS"]
 
     INPUTS:                             dict    = CONSTANTS ["INPUTS"]
     WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH:    str     = INPUTS    ["WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH"]

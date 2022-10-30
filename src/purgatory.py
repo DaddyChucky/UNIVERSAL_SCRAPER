@@ -13,6 +13,7 @@ from utils import *
 from constants_loader import *
 from taste_the_rainbow import *
 import  json
+from threading import Thread
 
 
 CATEGORY = "PURGATORY"
@@ -168,12 +169,13 @@ def purgatory(iterated_file: int, cutoff: int) -> dict:
         exit()
 
 
-def do_purge() -> None:
+def do_purge(start: int, end: int) -> None:
     """
     Runs purgatory for every file present in the OUT folder
 
     Args: 
-        None
+        (int) start:    index of start file number
+        (int) end:      index of end file number
 
     Returns:
         None, purged files are under purged folder
@@ -183,17 +185,45 @@ def do_purge() -> None:
     """
     try:
         out_files_name: list = get_out_files_name()
-        for i, out_file_name in enumerate(out_files_name):
-            print_header(CATEGORY, "Currently purging: " + out_file_name + " (" + str(round(i / len(out_files_name) * PURGE_PERCENT_FACTOR_PURGE, PURGE_ROUND_PRECISION_PURGE_STATUS)) + " %)")
-            with open(os.getcwd() + DATA_OUT_POST_FOLDER + out_file_name, DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
-                json.dump(purgatory(get_out_file_number(out_file_name), PURGE_CUTOFF), f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
-                print_success(CATEGORY, "Successfully purged " + out_file_name + " !")
+        for i in range(start, end):
+            print_header(CATEGORY, "Currently purging: " + out_files_name[i] + " (" + str(round(i / len(out_files_name) * PURGE_PERCENT_FACTOR_PURGE, PURGE_ROUND_PRECISION_PURGE_STATUS)) + " %)")
+            with open(os.getcwd() + DATA_OUT_POST_FOLDER + out_files_name[i], DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
+                json.dump(purgatory(get_out_file_number(out_files_name[i]), PURGE_CUTOFF), f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
+                print_success(CATEGORY, "Successfully purged " + out_files_name[i] + " !")
     except Exception as e:
         print_failure(CATEGORY, "Fatal error during do_purge")
         print(e)
         exit()
 
+def do_threaded_purge(n_threads: int = N_THREADS):
+    """
+    Runs threaded purgatory for every file present in the OUT folder
+
+    Args: 
+        (int) n_threads: number of threads to be created
+
+    Returns:
+        None, purged files are under purged folder
+
+    Exception:
+        Any exception is catched, and outputed
+    """
+    n_files: int = len(get_out_files_name()) - 1
+    jobs:       list[int]       = []
+    job:        int             = -1
+    threads:    list[Thread]    = []
+    for _ in range(n_threads):
+        job += 1
+        jobs.append(job)
+        job += n_files // n_threads
+        jobs.append(job)
+    for i in range(n_threads):
+        t: Thread = Thread(target=do_purge, args=[jobs[i], jobs[i + 1]])
+        threads.append(t)
+    for thread in threads:
+        thread.start()
+
 
 if __name__ == '__main__':
     create_folders(pre=True, post=True, out_pre_folder=DATA_OUT_PRE_FOLDER, out_post_folder=DATA_OUT_POST_FOLDER)
-    do_purge()
+    do_threaded_purge()
