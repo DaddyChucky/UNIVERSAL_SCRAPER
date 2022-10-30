@@ -184,12 +184,14 @@ def do_purge(start: int, end: int) -> None:
         Any exception is catched, and outputed
     """
     try:
-        out_files_name: list = get_out_files_name()
+        out_files_name: list    = get_out_files_name()
+        purged:         int     = 0
         for i in range(start, end):
-            print_header(CATEGORY, "Currently purging: " + out_files_name[i] + " (" + str(round(i / len(out_files_name) * PURGE_PERCENT_FACTOR_PURGE, PURGE_ROUND_PRECISION_PURGE_STATUS)) + " %)")
+            print_header(CATEGORY, "Currently purging: " + out_files_name[i] + " (" + str(round(purged / (end - start) * PURGE_PERCENT_FACTOR_PURGE, PURGE_ROUND_PRECISION_PURGE_STATUS)) + " %)")
             with open(os.getcwd() + DATA_OUT_POST_FOLDER + out_files_name[i], DATA_OUT_OPEN_MODE, encoding=DATA_ENCODING) as f:
                 json.dump(purgatory(get_out_file_number(out_files_name[i]), PURGE_CUTOFF), f, ensure_ascii=DUMP_ENSURE_ASCII, check_circular=DUMP_CHECK_CIRCULAR, allow_nan=DUMP_ALLOW_NAN, indent=DUMP_INDENT)
                 print_success(CATEGORY, "Successfully purged " + out_files_name[i] + " !")
+                purged += 1
     except Exception as e:
         print_failure(CATEGORY, "Fatal error during do_purge")
         print(e)
@@ -217,9 +219,13 @@ def do_threaded_purge(n_threads: int = N_THREADS):
         jobs.append(job)
         job += n_files // n_threads
         jobs.append(job)
-    for i in range(n_threads):
+    jobs[len(jobs) - 1] -= 1 
+    for i in range(len(jobs))[::2]:
+        if ((i + 2) > len(jobs)): break
         t: Thread = Thread(target=do_purge, args=[jobs[i], jobs[i + 1]])
+        i += 2
         threads.append(t)
+
     for thread in threads:
         thread.start()
 

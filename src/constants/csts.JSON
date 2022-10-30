@@ -29,7 +29,7 @@
         "PURGE_ROUND_PRECISION_PURGE_STATUS":   2,
         "FIND_NOT_FOUND":                       -1,
         "KILL_WORDS":                           ["COVID", "COVID-19"],
-        "N_THREADS":                            6
+        "N_THREADS":                            15
     },
     "INPUTS": {
         "WAIT_FOR_GLOBAL_PAGE_LOAD_XPATH":  "html",
